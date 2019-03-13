@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List of available Products</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div id="products-table">
+        <div class="row head-title">
+            <div class="col-sm text-center">
+                <span>Product Types List</span>
+            </div>
+        </div>
+        <div class="row product-fields text-center">
+            <div class="col-sm">
+                <span>Name</span>
+            </div>
+            <div sec:authorize="${hasRole('SUPERVISOR')}" class="col-sm">
+                <span>Edit</span>
+            </div>
+        </div>
+        <div th:if="${productTypeList.isEmpty()}" class="row">
+            <div class="col-sm text-center">
+                <span> No Available Product Types</span>
+            </div>
+        </div>
+        <div id="product-list">
+            <div th:each="productType: ${productTypeList}" class="products-item row text-center">
+                <div class="col-sm" th:text="${productType.getName()}"/>
+                <div sec:authorize="${hasRole('SUPERVISOR')}" class="col-sm">
+                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/productType/delete(productTypeId=${productType.getId()})}">Delete</a>
+                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/productType/edit(productTypeId=${productType.getId()})}">Edit</a>
+                </div>
+            </div>
+            <div class="products-item row">
+                <div class="col-sm end-row"></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

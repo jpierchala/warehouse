@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"/>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="row">
+<div class="col-sm add-product-heading text-center">
+    <h4 class="display-4 " th:text="${'Create Product type:'}"/>
+</div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <form th:action="@{/productType/create}" method="post" th:object="${productType}">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input th:field="*{name}" type="text" class="form-control create-input-fields" id="name" placeholder="Name">
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Wrong name</p>
+                </div>
+                <input type="submit" class="btn btn-success save-product" th:value="Submit"/>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm message">
+            <div th:if="${success != null}" class="alert alert-success">
+                <span th:text="${success}"/>
+            </div>
+            <div th:if="${error != null}" class="alert alert-danger">
+                <span th:text="${error}"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"/>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="row">
+    <div class="col-sm add-product-heading text-center">
+        <h4 class="display-4 " th:text="${'Create Product:'}"/>
+    </div>
+</div>
+<div class="message">
+    <span th:text="${success != null} ? ${success}"/>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <form th:action="@{/product/create}" method="post" th:object="${product}">
+                <div class="form-group">
+                    <label for="sourceSelect">Choose source:</label>
+                    <select class="form-control" id="sourceSelect" th:field="${product.warehouse}">
+                        <option
+                                th:each="state : ${T(com.ps.project.warehouse.domain.Warehouse).values()}"
+                                th:value="${state}"
+                                th:text="${state}"/>
+                    </select>
+                    <p th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}" style="color: red" th:text="${'Wrong Warehouse'}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="productType">Choose product Type:</label>
+                    <select class="form-control create-input-fields" id="productType" th:field="*{productType}">
+                        <option
+                                th:each="productTypeItem : ${productTypes}"
+                                th:value="${productTypeItem.getId()}"
+                                th:text="${productTypeItem.getName()}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('productType')}" th:errors="*{productType}" style="color: red" th:text="${'Wrong product Type'}">Wrong product Type</p>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input th:field="*{name}" type="text" class="form-control create-input-fields" id="name" placeholder="Name">
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Wrong name</p>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input th:field="*{description}" type="text" class="form-control create-input-fields" id="description" placeholder="Description">
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Wrong Description</p>
+                </div>
+                <div class="form-group">
+                    <label for="code">Code:</label>
+                    <input th:field="*{code}" type="text" class="form-control create-input-fields" id="code" placeholder="Code">
+                    <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}" style="color: red" th:text="${'Wrong Code'}"></p>
+                </div>
+                    <input th:field="${product.amount}" type="hidden"/>
+                    <input type="submit" class="btn btn-success save-product" th:value="Submit"/>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

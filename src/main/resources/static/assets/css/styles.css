@@ -1,0 +1,125 @@
+.text-center{
+    text-align: center;
+}
+
+#warehouse-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: Calibri;
+    color: grey;
+    border-top-color: #6ab422;
+    border-left-color: #6ab422;
+    border-right-color: #33a607;
+    border-bottom-color: #2c9106;
+    border-style: solid;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 15px;
+    border-width: 2px;
+}
+
+.products-title{
+    padding: 3px
+}
+
+.head-title {
+    margin: auto;
+    font-family: Calibri;
+    font-size: 32px;
+    background-color: #baf39a;
+    -moz-border-radius: 15px 15px 0px 0px;
+    -webkit-border-radius: 15px 15px 0px 0px;
+    border-width: 1px;
+}
+
+#products-table {
+    border-style: solid;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-color: #d1fbd1;
+    padding-bottom:5px;
+    border-width: 1px;
+
+}
+
+.product-fields {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px;
+    margin:auto;
+}
+
+.products-item {
+    margin: auto;
+}
+
+.products-item .col-sm {
+    border-top: 1px solid #3fe609;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.products-item:nth-child(even)>div {
+    background: #e5fbe8;
+}
+
+.products-item:last-child{
+    padding-bottom: 20px;
+}
+
+#sourceSelect {
+    max-width: 40%;
+}
+
+.create-input-fields {
+    max-width: 40%;
+}
+
+.add-product-heading{
+    background-color: #d1fbd1;
+    font-family: Calibri;
+    text-align: left;
+    border-bottom: 2px solid #2c9106;
+    margin-bottom: 10px;
+}
+
+.save-product {
+    margin-top: 20px;
+}
+
+#warehouse-product-amount {
+    padding-top: 10px;
+}
+
+.error-text {
+    color: red;
+}
+
+.product-details-heading {
+    color: #464746;
+    border-bottom: 1px groove #2c9106;
+    padding-bottom: 5px;
+}
+
+.product-details>span {
+    font-weight: bold;
+}
+
+.product-details {
+    border: 1px groove #2c9106;
+    border-radius: 10px;
+
+}
+
+.end-row {
+    background-color: #fcfffc !important;
+}
+
+.amount {
+    font-weight: bold;
+    color: red;
+    font-size: 20px;
+}
+
+.message {
+    margin-top: 10px;
+}

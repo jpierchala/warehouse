@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List of available Products</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"/>
+</head>
+<body>
+
+<div class="container">
+    <div id="warehouse-title" class="row">
+        <div class="col-md text-center">
+            <h1 class="products-title">Welcome to Warehouse</h1>
+        </div>
+    </div>
+    <div id="products-table">
+        <div class="row head-title">
+            <div class="col-sm text-center">
+                <span>Products List</span>
+            </div>
+        </div>
+        <div class="row product-fields text-center">
+            <div class="col-sm">
+                <span>Name</span>
+            </div>
+            <div class="col-sm">
+                <span>Warehouse</span>
+            </div>
+            <div class="col-sm">
+                <span>Amount</span>
+            </div>
+            <div class="col-sm">
+                <span>Edit</span>
+            </div>
+        </div>
+        <div th:if="${products.isEmpty()}" class="row">
+            <div class="col-sm text-center">
+                <span> No Available Products!</span>
+            </div>
+        </div>
+        <div id="product-list">
+            <div th:each="product: ${products}" class="products-item row text-center">
+                <div class="col-sm" th:text="${product.getName()}"/>
+                <div class="col-sm" th:text="${product.getWarehouse()}"/>
+                <div class="col-sm" th:text="${product.getAmount()}"/>
+                <div class="col-sm">
+                    <a class="btn btn-success" th:href="@{/product/add(productId=${product.getId()})}">Add</a>
+                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/product/delete(productId=${product.getId()})}">Delete</a>
+                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/product/edit(productId=${product.getId()})}">Edit</a>
+                </div>
+            </div>
+            <div class="products-item row">
+                <div class="col-sm end-row"></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

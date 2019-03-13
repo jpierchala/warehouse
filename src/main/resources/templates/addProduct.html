@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"/>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:inline="javascript">
+        var productName = /*[[${productObj.getName()}]]*/ 'none';
+    </script>
+</head>
+<body>
+<div class="row">
+    <div class="col-sm add-product-heading text-center">
+        <h4 class="display-4 " th:text="${'Add product:'}"/>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 produ ct-details">
+            <div class="product-details-heading">
+                <span>Product data:</span>
+            </div>
+            Id: <span th:text="${productObj.getId()}"/></br>
+            Name: <span th:text="${productObj.getName()}"/></br>
+            Description: <span th:text="${productObj.getDescription()}"/></br>
+            Warehouse: <span th:text="${productObj.getWarehouse()}"/></br>
+            Available amount: <span class="amount">&#8734;</span>
+        </div>
+        <div class="col-sm">
+            <div class="form-group">
+                <form th:action="@{/product/add}" method="post">
+                    <label for="sourceSelect">Choose source:</label>
+                    <select class="form-control" id="sourceSelect">
+                        <option value="External">External</option>
+                        <option th:each="warehouseObj : ${T(com.ps.project.warehouse.domain.Warehouse).values()}"
+                                th:if="${warehouseObj != productObj.getWarehouse()}"
+                                th:value="${warehouseObj}"
+                                th:text="${warehouseObj}"/>
+                    </select>
+                    <div class="error-text">
+                        <span >This product is not in the other warehouse. Choose External source.</span>
+                    </div>
+                    <div id="warehouse-product-amount" class="form-group">
+                        <label for="warehouseProduct">Amount to add:</label>
+                        <input type="text" class="form-control" id="warehouseProduct" placeholder="Amount" name="amount">
+                    </div>
+                    <input name="sourceProductId" id="sourceProductId" type="hidden" value="">
+                    <input name="productId" type="hidden" th:value="${productObj.getId()}">
+                    <input type="submit" class="btn btn-success save-product" th:value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div th:if="${param.success != null}" class="col-sm">
+            <div class="alert alert-success">
+                <span th:text="${param.success}"/>
+            </div>
+        </div>
+        <div th:if="${param.error != null}" class="col-sm">
+            <div class="alert alert-danger">
+                <span th:text="${param.error}"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
