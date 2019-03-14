@@ -15,11 +15,31 @@
                 <span>Product Types List</span>
             </div>
         </div>
+        <div id="nav-bar-warehouse" class="row">
+            <nav class="col-sm-6 navbar navbar-light">
+                <a href="/productType/list" th:text="${'Product Type list'}"></a>
+                <a href="/product/list" th:text="${'Products list'}"></a>
+                <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}"th:text="${'Create product type'}"></a>
+                <a sec:authorize="${hasRole('ADMIN')}" href="/product/create" th:text="${'Create product'}"></a>
+            </nav>
+        </div>
+        <div class="row">
+            <div th:if="${success != null}" class="col-sm">
+                <div class="alert alert-success">
+                    <span th:text="${success}"/>
+                </div>
+            </div>
+            <div th:if="${error != null}" class="col-sm">
+                <div class="alert alert-danger">
+                    <span th:text="${error}"/>
+                </div>
+            </div>
+        </div>
         <div class="row product-fields text-center">
             <div class="col-sm">
                 <span>Name</span>
             </div>
-            <div sec:authorize="${hasRole('SUPERVISOR')}" class="col-sm">
+            <div sec:authorize="${hasRole('ADMIN')}" class="col-sm">
                 <span>Edit</span>
             </div>
         </div>
@@ -31,9 +51,9 @@
         <div id="product-list">
             <div th:each="productType: ${productTypeList}" class="products-item row text-center">
                 <div class="col-sm" th:text="${productType.getName()}"/>
-                <div sec:authorize="${hasRole('SUPERVISOR')}" class="col-sm">
-                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/productType/delete(productTypeId=${productType.getId()})}">Delete</a>
-                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/productType/edit(productTypeId=${productType.getId()})}">Edit</a>
+                <div sec:authorize="${hasRole('ADMIN')}" class="col-sm">
+                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success" th:href="@{/productType/delete(productTypeId=${productType.getId()})}">Delete</a>
+                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success" th:href="@{/productType/edit(productTypeId=${productType.getId()})}">Edit</a>
                 </div>
             </div>
             <div class="products-item row">

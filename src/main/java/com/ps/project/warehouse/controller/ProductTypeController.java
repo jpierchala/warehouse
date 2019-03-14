@@ -1,5 +1,6 @@
 package com.ps.project.warehouse.controller;
 
+import com.ps.project.warehouse.Repository.ProductRepository;
 import com.ps.project.warehouse.Repository.ProductTypeRepository;
 import com.ps.project.warehouse.domain.ProductType;
 import com.ps.project.warehouse.exceptions.ProductTypeNotExistException;
@@ -18,6 +19,9 @@ public class ProductTypeController {
 
     @Autowired
     private ProductTypeRepository productTypeRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping(path = "/list")
     public String getProductTypeList(Model model){
@@ -45,13 +49,17 @@ public class ProductTypeController {
     }
 
     @GetMapping("/delete")
-    public String deleteProductType(Model model, @RequestParam long productTypeId){
+    public String deleteProductType(RedirectAttributes redirectAttributes, @RequestParam long productTypeId){
         if(productTypeRepository.existsById(productTypeId)){
-            productTypeRepository.deleteById(productTypeId);
-            model.addAttribute("success", "productObj has been deleted");
+            if(productRepository.findByProductType(productTypeRepository.getOne(productTypeId)).isEmpty()){
+                productTypeRepository.deleteById(productTypeId);
+                redirectAttributes.addFlashAttribute("success", "product type has been deleted");
+            }else {
+                redirectAttributes.addFlashAttribute("error", "Product type is bind to products");
+            }
         }else {
             throw new ProductTypeNotExistException();
         }
-        return "redirect:productTypesList";
+        return "redirect:list";
     }
 }

@@ -137,6 +137,17 @@ public class ProductController {
         return success ? "redirect:list" : "redirect:add";
     }
 
+    @GetMapping(path = "/delete")
+    public String deleteProduct(RedirectAttributes redirectAttributes, @RequestParam Long productId){
+        if(productRepository.existsById(productId)){
+            productRepository.deleteById(productId);
+            redirectAttributes.addFlashAttribute("success", "Product has been deleted");
+        }else {
+            throw new ProductDoesNotExistException();
+        }
+        return "redirect:list";
+    }
+
     @GetMapping(path = "/getProduct")
     @ResponseBody
     public Map<String, Object> getProduct(@RequestParam("name") String productName, @RequestParam("source") String source){

@@ -21,6 +21,25 @@
                 <span>Products List</span>
             </div>
         </div>
+        <div id="nav-bar-warehouse" class="row">
+            <nav class="col-sm-5 navbar navbar-light">
+                <a href="/productType/list" th:text="${'Product Type list'}"></a>
+                <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}"th:text="${'Create product type'}"></a>
+                <a sec:authorize="${hasRole('ADMIN')}" href="/product/create" th:text="${'Create product'}"></a>
+            </nav>
+        </div>
+        <div class="row">
+            <div th:if="${success != null}" class="col-sm">
+                <div class="alert alert-success">
+                    <span th:text="${success}"/>
+                </div>
+            </div>
+            <div th:if="${error != null}" class="col-sm">
+                <div class="alert alert-danger">
+                    <span th:text="${error}"/>
+                </div>
+            </div>
+        </div>
         <div class="row product-fields text-center">
             <div class="col-sm">
                 <span>Name</span>
@@ -47,8 +66,8 @@
                 <div class="col-sm" th:text="${product.getAmount()}"/>
                 <div class="col-sm">
                     <a class="btn btn-success" th:href="@{/product/add(productId=${product.getId()})}">Add</a>
-                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/product/delete(productId=${product.getId()})}">Delete</a>
-                    <a sec:authorize="${hasRole('SUPERVISOR')}" class="btn btn-success" th:href="@{/product/edit(productId=${product.getId()})}">Edit</a>
+                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success" th:href="@{/product/delete(productId=${product.getId()})}">Delete</a>
+                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success" th:href="@{/product/edit(productId=${product.getId()})}">Edit</a>
                 </div>
             </div>
             <div class="products-item row">

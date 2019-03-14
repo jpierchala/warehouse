@@ -27,6 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
+    LoginRedirectHandler loginRedirectHandler;
+
+    @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder);
 
@@ -36,10 +39,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
         .authorizeRequests()
-        .antMatchers("/", "/**" ).permitAll()
+        .antMatchers("/", "/login", "/css/**", "/js/**", "/webjars/**").permitAll()
+                .antMatchers("/product/list", "/productType/list",
+                        "/product/add**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/product/edit**", "/product/create",
+                        "/product/delete**",
+                        "/productType/edit**", "/productType/create",
+                        "/productType/delete**").hasRole("ADMIN")
         .anyRequest().anonymous()
             .and()
-                .formLogin().permitAll()
+                .formLogin().successHandler(loginRedirectHandler).permitAll()
             .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 

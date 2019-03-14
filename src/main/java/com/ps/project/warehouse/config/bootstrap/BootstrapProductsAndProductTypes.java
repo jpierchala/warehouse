@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Service
 @Slf4j
-public class BootstrapAdminUserAndRoles implements InitializingBean {
+public class BootstrapProductsAndProductTypes implements InitializingBean {
 
     @Autowired
     UserRepository userRepository;

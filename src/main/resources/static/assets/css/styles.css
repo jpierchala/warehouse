@@ -31,6 +31,25 @@
     border-width: 1px;
 }
 
+#nav-bar-warehouse {
+    margin: auto;
+    font-family: Calibri;
+    background-color: #c5ffa5;
+    margin-bottom: 10px;
+
+}
+
+#nav-bar-warehouse .navbar > a:active, #nav-bar-warehouse .navbar > a:hover {
+    color: #90969c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#nav-bar-warehouse .navbar > a {
+    color: #1e5b04;
+    font-weight: bold;
+}
+
 #products-table {
     border-style: solid;
     -moz-border-radius: 15px;
@@ -79,7 +98,7 @@
     font-family: Calibri;
     text-align: left;
     border-bottom: 2px solid #2c9106;
-    margin-bottom: 10px;
+
 }
 
 .save-product {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,10 +10,21 @@
 <body>
 
 <div class="row">
-<div class="col-sm add-product-heading text-center">
-    <h4 class="display-4 " th:text="${'Create Product type:'}"/>
+    <div class="col-sm add-product-heading text-center">
+        <h4 class="display-4 " th:text="${'Create Product type:'}"/>
+    </div>
 </div>
+<div id="nav-bar-warehouse" class="row">
+    <nav class="col-sm-3 navbar navbar-light">
+        <a href="/productType/list" th:text="${'Product Type list'}"></a>
+        <a href="/product/list" th:text="${'Products list'}"></a>
+        <a sec:authorize="${hasRole('ADMIN')}" href="/product/create" th:text="${'Create product'}"></a>
+    </nav>
+    <div class="col-sm text-right">
+        <a href="/logout" th:text="${'logout'}"></a>
+    </div>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-sm">

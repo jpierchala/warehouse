@@ -1,6 +1,7 @@
 package com.ps.project.warehouse.Repository;
 
 import com.ps.project.warehouse.domain.Product;
+import com.ps.project.warehouse.domain.ProductType;
 import com.ps.project.warehouse.domain.Warehouse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByName(String name);
 
     Product findByNameAndWarehouse(String name, Warehouse warehouse);
+
+    List<Product> findByProductType(ProductType productType);
 }
