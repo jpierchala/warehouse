@@ -5,6 +5,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "io.freefair.lombok"
 
 group = 'com.ps.project'
 version = '0.0.1-SNAPSHOT'
