@@ -62,7 +62,7 @@ public class BootstrapAdminUserAndRoles implements InitializingBean {
     }
 
     public void createTrainee(){
-        createSpecifiedUser("warehouseman", "userish");
+        createSpecifiedUser("warehouseman", "user");
     }
 
     private void createSpecifiedUser(String username, String role){
