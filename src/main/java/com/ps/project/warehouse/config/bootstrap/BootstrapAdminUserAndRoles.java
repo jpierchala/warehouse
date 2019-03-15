@@ -36,7 +36,7 @@ public class BootstrapAdminUserAndRoles implements InitializingBean {
     public void afterPropertiesSet() {
         log.info("Bootstrapping roles...");
         createRoles();
-        log.info("Bootstrapping admin user.");
+        log.info("Bootstrapping admin userish.");
         createAdmin();
         createTrainee();
         log.info("Bootstrapping done.");
@@ -62,12 +62,12 @@ public class BootstrapAdminUserAndRoles implements InitializingBean {
     }
 
     public void createTrainee(){
-        createSpecifiedUser("warehouseman", "user");
+        createSpecifiedUser("warehouseman", "userish");
     }
 
     private void createSpecifiedUser(String username, String role){
         if(userRepository.findByUsername(username.toLowerCase()) != null){
-            log.info(username.toLowerCase() + " user already exists");
+            log.info(username.toLowerCase() + " userish already exists");
             return;
         }
         User user = new User();

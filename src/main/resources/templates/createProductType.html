@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -19,6 +19,7 @@
         <a href="/productType/list" th:text="${'Product Type list'}"></a>
         <a href="/product/list" th:text="${'Products list'}"></a>
         <a sec:authorize="${hasRole('ADMIN')}" href="/product/create" th:text="${'Create product'}"></a>
+        <a href="/user/list" sec:authorize="${hasRole('ADMIN')}" th:text="${'Users list'}"></a>
     </nav>
     <div class="col-sm text-right">
         <a href="/logout" th:text="${'logout'}"></a>
@@ -31,7 +32,8 @@
             <form th:action="@{/productType/create}" method="post" th:object="${productType}">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input th:field="*{name}" type="text" class="form-control create-input-fields" id="name" placeholder="Name">
+                    <input th:field="*{name}" type="text" class="form-control create-input-fields" id="name"
+                           placeholder="Name">
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Wrong name</p>
                 </div>
                 <input type="submit" class="btn btn-success save-product" th:value="Submit"/>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,8 +17,12 @@
     <nav class="col-sm-3 navbar navbar-light">
         <a href="/productType/list" th:text="${'Product Type list'}"></a>
         <a href="/product/list" th:text="${'Products list'}"></a>
-        <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}"th:text="${'Create product type'}"></a>
+        <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}" th:text="${'Create product type'}"></a>
+        <a href="/user/list" sec:authorize="${hasRole('ADMIN')}" th:text="${'Users list'}"></a>
     </nav>
+    <div class="col-sm text-right">
+        <a href="/logout" th:text="${'logout'}"></a>
+    </div>
 </div>
 
 <div class="message">
@@ -36,7 +40,8 @@
                                 th:value="${state}"
                                 th:text="${state}"/>
                     </select>
-                    <p th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}" style="color: red" th:text="${'Wrong Warehouse'}"></p>
+                    <p th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}" style="color: red"
+                       th:text="${'Wrong Warehouse'}"></p>
                 </div>
                 <div class="form-group">
                     <label for="productType">Choose product Type:</label>
@@ -46,25 +51,31 @@
                                 th:value="${productTypeItem.getId()}"
                                 th:text="${productTypeItem.getName()}"></option>
                     </select>
-                    <p th:if="${#fields.hasErrors('productType')}" th:errors="*{productType}" style="color: red" th:text="${'Wrong product Type'}">Wrong product Type</p>
+                    <p th:if="${#fields.hasErrors('productType')}" th:errors="*{productType}" style="color: red"
+                       th:text="${'Wrong product Type'}">Wrong product Type</p>
                 </div>
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input th:field="*{name}" type="text" class="form-control create-input-fields" id="name" placeholder="Name">
+                    <input th:field="*{name}" type="text" class="form-control create-input-fields" id="name"
+                           placeholder="Name">
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Wrong name</p>
                 </div>
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <input th:field="*{description}" type="text" class="form-control create-input-fields" id="description" placeholder="Description">
-                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Wrong Description</p>
+                    <input th:field="*{description}" type="text" class="form-control create-input-fields"
+                           id="description" placeholder="Description">
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Wrong
+                        Description</p>
                 </div>
                 <div class="form-group">
                     <label for="code">Code:</label>
-                    <input th:field="*{code}" type="text" class="form-control create-input-fields" id="code" placeholder="Code">
-                    <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}" style="color: red" th:text="${'Wrong Code'}"></p>
+                    <input th:field="*{code}" type="text" class="form-control create-input-fields" id="code"
+                           placeholder="Code">
+                    <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}" style="color: red"
+                       th:text="${'Wrong Code'}"></p>
                 </div>
-                    <input th:field="${product.amount}" type="hidden"/>
-                    <input type="submit" class="btn btn-success save-product" th:value="Submit"/>
+                <input th:field="${product.amount}" type="hidden"/>
+                <input type="submit" class="btn btn-success save-product" th:value="Submit"/>
 
             </form>
         </div>

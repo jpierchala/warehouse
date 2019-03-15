@@ -19,9 +19,14 @@
             <nav class="col-sm-6 navbar navbar-light">
                 <a href="/productType/list" th:text="${'Product Type list'}"></a>
                 <a href="/product/list" th:text="${'Products list'}"></a>
-                <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}"th:text="${'Create product type'}"></a>
+                <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}"
+                   th:text="${'Create product type'}"></a>
                 <a sec:authorize="${hasRole('ADMIN')}" href="/product/create" th:text="${'Create product'}"></a>
+                <a href="/user/list" sec:authorize="${hasRole('ADMIN')}" th:text="${'Users list'}"></a>
             </nav>
+            <div class="col-sm text-right">
+                <a href="/logout" th:text="${'logout'}"></a>
+            </div>
         </div>
         <div class="row">
             <div th:if="${success != null}" class="col-sm">
@@ -52,8 +57,10 @@
             <div th:each="productType: ${productTypeList}" class="products-item row text-center">
                 <div class="col-sm" th:text="${productType.getName()}"/>
                 <div sec:authorize="${hasRole('ADMIN')}" class="col-sm">
-                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success" th:href="@{/productType/delete(productTypeId=${productType.getId()})}">Delete</a>
-                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success" th:href="@{/productType/edit(productTypeId=${productType.getId()})}">Edit</a>
+                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success"
+                       th:href="@{/productType/delete(productTypeId=${productType.getId()})}">Delete</a>
+                    <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success"
+                       th:href="@{/productType/edit(productTypeId=${productType.getId()})}">Edit</a>
                 </div>
             </div>
             <div class="products-item row">

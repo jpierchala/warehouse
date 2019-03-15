@@ -23,7 +23,11 @@
         <a href="/product/list" th:text="${'Products list'}"></a>
         <a sec:authorize="${hasRole('ADMIN')}" href="/product/create" th:text="${'Create product'}"></a>
         <a sec:authorize="${hasRole('ADMIN')}" href="/productType/create" th:text="${'Create product type'}"></a>
-    </nav>
+    <a href="/user/list" sec:authorize="${hasRole('ADMIN')}"th:text="${'Users list'}"></a>
+</nav>
+    <div class="col-sm text-right">
+        <a href="/logout" th:text="${'logout'}"></a>
+    </div>
 </div>
 
 <div class="container">

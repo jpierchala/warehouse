@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List of available Products</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"/>
+</head>
+<body>
+
+<div class="container">
+    <div id="products-table">
+        <div class="row head-title">
+            <div class="col-sm text-center">
+                <span>Users List</span>
+            </div>
+        </div>
+    </div>
+    <div id="nav-bar-warehouse" class="row">
+        <nav class="col-sm-6 navbar navbar-light">
+            <a href="/productType/list" th:text="${'Product Type list'}"></a>
+            <a href="/product/list" th:text="${'Products list'}"></a>
+            <a href="/productType/create" sec:authorize="${hasRole('ADMIN')}" th:text="${'Create product type'}"></a>
+            <a href="/product/create" sec:authorize="${hasRole('ADMIN')}" th:text="${'Create product'}"></a>
+        </nav>
+        <div class="col-sm text-right">
+            <a href="/logout" th:text="${'logout'}"></a>
+        </div>
+    </div>
+    <div class="row">
+        <div th:if="${success != null}" class="col-sm">
+            <div class="alert alert-success">
+                <span th:text="${success}"/>
+            </div>
+        </div>
+        <div th:if="${error != null}" class="col-sm">
+            <div class="alert alert-danger">
+                <span th:text="${error}"/>
+            </div>
+        </div>
+    </div>
+    <div class="row product-fields text-center">
+        <div class="col-sm">
+            <span>Name</span>
+        </div>
+        <div class="col-sm">
+            <span>Role</span>
+        </div>
+        <div class="col-sm">
+            <span>Edit</span>
+        </div>
+    </div>
+    <div th:if="${users.isEmpty()}" class="row">
+        <div class="col-sm text-center">
+            <span> No Available Users!</span>
+        </div>
+    </div>
+    <div id="product-list">
+        <div th:each="user: ${users}" class="products-item row text-center">
+            <div class="col-sm" th:text="${user.getUsername()}"/>
+            <div class="col-sm" th:each="userRole : ${user.getRolesNames()}" th:text="${userRole}"/>
+            <div class="col-sm">
+                <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success"
+                   th:href="@{/user/delete(userId=${user.getId()})}">Delete</a>
+                <a sec:authorize="${hasRole('ADMIN')}" class="btn btn-success"
+                   th:href="@{/user/edit(userId=${user.getId()})}">Edit</a>
+            </div>
+        </div>
+        <div class="products-item row">
+            <div class="col-sm end-row"></div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+</body>
+</html>

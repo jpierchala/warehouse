@@ -19,69 +19,8 @@ import java.util.Set;
 @Slf4j
 public class BootstrapProductsAndProductTypes implements InitializingBean {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    Environment environment;
-
-    @Transactional
     @Override
-    public void afterPropertiesSet() {
-        log.info("Bootstrapping roles...");
-        createRoles();
-        log.info("Bootstrapping admin user.");
-        createAdmin();
-        createTrainee();
-        log.info("Bootstrapping done.");
-    }
-
-    public void createRoles(){
-        Role role;
-        if(roleRepository.findByName("USER") == null){
-            role = new Role();
-            role.setName("USER");
-            roleRepository.save(role);
-        }
-        if (roleRepository.findByName("ADMIN") == null){
-            role = new Role();
-            role.setName("ADMIN");
-            roleRepository.save(role);
-        }
-
-    }
-
-    public void createAdmin(){
-        createSpecifiedUser("manager", "admin");
-    }
-
-    public void createTrainee(){
-        createSpecifiedUser("warehouseman", "user");
-    }
-
-    private void createSpecifiedUser(String username, String role){
-        if(userRepository.findByUsername(username.toLowerCase()) != null){
-            log.info(username.toLowerCase() + " user already exists");
-            return;
-        }
-        User user = new User();
-        user.setUsername(username.toLowerCase());
-        user.setEmail("jpierchala@pm.me");
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByName(role.toUpperCase()));
-        if(roles.isEmpty()){
-            log.info("NO " + role.toUpperCase() + " ROLE IN DATABASE!");
-            return;
-        }
-        user.setRoles(roles);
-        user.setPassword(passwordEncoder.encode(username.toLowerCase()));
-        userRepository.save(user);
+    public void afterPropertiesSet() throws Exception {
+        
     }
 }

@@ -3,6 +3,7 @@ package com.ps.project.warehouse.exceptions;
 
 import com.ps.project.warehouse.Repository.ProductRepository;
 import com.ps.project.warehouse.Repository.ProductTypeRepository;
+import com.ps.project.warehouse.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +21,9 @@ public class ExceptionsHandlers {
 
     @Autowired
     ProductTypeRepository productTypeRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @ExceptionHandler(ProductDoesNotExistException.class)
     public ModelAndView handleProductDoesNotExist(HttpServletRequest request){
@@ -40,6 +44,17 @@ public class ExceptionsHandlers {
         modelAndView.addObject("productTypes", productTypeRepository.findAll());
         modelAndView.addObject("error", "The productType with that id does not exist");
         modelAndView.setViewName("productTypesList");
+        return modelAndView;
+    }
+
+    @ExceptionHandler(UserDoesNotExistException.class)
+    public ModelAndView handleUserDoesNotExistException(HttpServletRequest request){
+
+        log.info("User with id: " + request.getParameter("userId").toString() + " not found");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("users", userRepository.findAll());
+        modelAndView.addObject("error", "The user with that id does not exist");
+        modelAndView.setViewName("user/list");
         return modelAndView;
     }
 
