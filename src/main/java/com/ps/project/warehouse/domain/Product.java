@@ -1,7 +1,6 @@
 package com.ps.project.warehouse.domain;
 
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +23,7 @@ public class Product {
 
     private int amount = 0;
 
-    @Lob
+    @Basic
     @Size(min = 5)
     @NotNull
     private String description;
