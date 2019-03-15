@@ -110,22 +110,22 @@ public class ProductController {
         Product productFromAnotherWarehouse =  null;
         boolean  success = false;
         if(bindingResult.hasErrors()){
-            redirectAttributes.addAttribute("error", "Something went wrong");
+            redirectAttributes.addFlashAttribute("error", "Something went wrong");
         }else {
             if(addProductsCommand.getSourceProductId() == null) {
                 product.setAmount(product.getAmount() + Math.abs(addProductsCommand.getAmount()));
-                redirectAttributes.addAttribute("success", "Amount added");
+                redirectAttributes.addFlashAttribute("success", "Amount added");
                 success = true;
             }else {
                 productFromAnotherWarehouse = productRepository.getOne(addProductsCommand.getSourceProductId());
                 if (productFromAnotherWarehouse == null){
-                    redirectAttributes.addAttribute("error", "Source product deos not exist");
+                    redirectAttributes.addFlashAttribute("error", "Source product deos not exist");
                 }else if(addProductsCommand.getAmount() >  productFromAnotherWarehouse.getAmount()){
-                    redirectAttributes.addAttribute("error", "Not enaugh amount in warehouse");
+                    redirectAttributes.addFlashAttribute("error", "Not enaugh amount in warehouse");
                 }else {
                     productFromAnotherWarehouse.setAmount(productFromAnotherWarehouse.getAmount() - Math.abs(addProductsCommand.getAmount()));
                     product.setAmount(product.getAmount() + Math.abs(addProductsCommand.getAmount()));
-                    redirectAttributes.addAttribute("success", "Amount added");
+                    redirectAttributes.addFlashAttribute("success", "Amount added");
                     success = true;
                 }
             }
