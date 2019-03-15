@@ -95,7 +95,7 @@ public class ProductController {
             Product product = productRepository.getOne(productId);
             model.addAttribute("productObj", product);
             return "addProduct";
-            
+
         }else {
             return "redirect:listProducts";
         }
