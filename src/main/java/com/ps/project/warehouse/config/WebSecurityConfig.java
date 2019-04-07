@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/edit**", "/product/create",
                         "/product/delete**",
                         "/productType/edit**", "/productType/create",
+                        "/product/getProduct*",
                         "/productType/delete**", "/user/**", "/role/**").hasRole("ADMIN")
         .anyRequest().anonymous()
             .and()
