@@ -44,13 +44,16 @@ public class UserController {
     }
 
     @PostMapping(path = "/save")
-    public String save(RedirectAttributes redirectAttributes, @RequestParam long roleId, @Valid @ModelAttribute("user") User user, BindingResult result){
+    public String save(RedirectAttributes redirectAttributes, @Valid @ModelAttribute("user") User user,
+                       BindingResult result, Model model){
         if(result.hasErrors()){
+            model.addAttribute("user", user);
+            model.addAttribute("roleList", roleRepository.findAll());
             return "userish/create";
         }
         Set<Role> roles = new HashSet<>();
-        if(roleRepository.existsById(roleId)){
-            roles.add(roleRepository.getOne(roleId));
+        if(roleRepository.existsById(user.getRoleId())){
+            roles.add(roleRepository.getOne(user.getRoleId()));
         }else {
             roles.add(roleRepository.findByName("USER"));
         }

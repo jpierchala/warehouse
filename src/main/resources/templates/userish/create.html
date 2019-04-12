@@ -35,14 +35,14 @@
             <form th:action="@{/user/save}" method="post" th:object="${user}">
 
                 <div class="form-group">
-                    <label for="role">Choose role:</label>
-                    <select class="form-control create-input-fields" id="role" th:field="*{roles}">
+                    <label for="roleId">Choose role:</label>
+                    <select class="form-control create-input-fields" id="roleId" name="roleId" th:field="*{roleId}">
                         <option
                                 th:each="role : ${roleList}"
                                 th:value="${role.getId()}"
                                 th:text="${role.getName()}"></option>
                     </select>
-                    <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" style="color: red" th:text="${'Wrong roles'}">Wrong roles</p>
+                    <p th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}" style="color: red" th:text="${'Wrong roles'}">Wrong roles</p>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
