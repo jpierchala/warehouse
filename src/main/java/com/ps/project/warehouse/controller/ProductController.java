@@ -8,6 +8,9 @@ import com.ps.project.warehouse.domain.Warehouse;
 import com.ps.project.warehouse.exceptions.ProductDoesNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/product")
@@ -31,13 +36,17 @@ public class ProductController {
     private ProductTypeRepository productTypeRepository;
 
     @GetMapping(path = "/")
-    public String index(){
+    public String index(RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("page", 0);
+        redirectAttributes.addFlashAttribute("size", 10);
         return "redirect:list";
     }
 
     @GetMapping(path = "/list")
-    public String getListOfProducts(Model model){
-        model.addAttribute("products", productRepository.findAll());
+    public String getListOfProducts(Pageable pageable, Model model){
+        Page<Product> products =  productRepository.findAll(pageable);
+        log.info(String.valueOf(products.getTotalPages()));
+        model.addAttribute("products", productRepository.findAll(pageable));
         return "productList";
     }
 
@@ -65,8 +74,8 @@ public class ProductController {
     @GetMapping(path = "/edit")
     public String getEditProduct(Model model, @RequestParam long productId){
         if(productRepository.existsById(productId)){
-            Product product = productRepository.getOne(productId);
-            model.addAttribute("product", product);
+            Optional<Product> product = productRepository.findById(productId);
+            model.addAttribute("product", product.get());
             model.addAttribute("productTypes", productTypeRepository.findAll());
         }else{
             throw new ProductDoesNotExistException();
@@ -83,7 +92,7 @@ public class ProductController {
         }else{
             model.addAttribute("productId", product.getId());
             model.addAttribute("error", "Product could not be saved. Check form ");
-            model.addAttribute("product", productRepository.getOne(product.getId()));
+            model.addAttribute("product",productRepository.findById(product.getId()).get());
             model.addAttribute("productTypes", productTypeRepository.findAll());
             return "editProduct";
         }
@@ -92,8 +101,8 @@ public class ProductController {
     @GetMapping(path = "/add")
     public String getAddProduct(Model model, @RequestParam long productId){
         if(productRepository.existsById(productId)){
-            Product product = productRepository.getOne(productId);
-            model.addAttribute("productObj", product);
+            Optional<Product> product = productRepository.findById(productId);
+            model.addAttribute("productObj", product.get());
             return "addProduct";
 
         }else {
@@ -106,7 +115,7 @@ public class ProductController {
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes){
 
-        Product product = productRepository.getOne(addProductsCommand.getProductId());
+        Product product = productRepository.findById(addProductsCommand.getProductId()).get();
         Product productFromAnotherWarehouse =  null;
         boolean  success = false;
         if(bindingResult.hasErrors()){
@@ -117,7 +126,7 @@ public class ProductController {
                 redirectAttributes.addFlashAttribute("success", "Amount added");
                 success = true;
             }else {
-                productFromAnotherWarehouse = productRepository.getOne(addProductsCommand.getSourceProductId());
+                productFromAnotherWarehouse = productRepository.findById(addProductsCommand.getSourceProductId()).get();
                 if (productFromAnotherWarehouse == null){
                     redirectAttributes.addFlashAttribute("error", "Source product deos not exist");
                 }else if(addProductsCommand.getAmount() >  productFromAnotherWarehouse.getAmount()){

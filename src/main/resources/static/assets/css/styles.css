@@ -142,3 +142,23 @@
 .message {
     margin-top: 10px;
 }
+
+.page-item.active .page-link{
+    z-index: 1;
+    color: #fff;
+    background-color: #39a816;
+    border-color: #9fa3aa;
+}
+
+a.page-link{
+    color:black;
+}
+
+a.page-link:hover{
+    background-color: #baf39a;
+    color: black;
+}
+
+.page-number{
+    color: black;
+}

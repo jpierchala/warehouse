@@ -53,7 +53,7 @@ public class BootstrapProductsAndProductTypes implements InitializingBean {
         if(productTypeRepository.findAll().isEmpty()){
             log.warn("Could not bootstrap products. No product types specified.");
             return;
-        }else if (!productRepository.findAll().isEmpty()){
+        }else if (productRepository.findAll().iterator().hasNext()){
             log.warn("There are products in database");
             return;
         }else {
