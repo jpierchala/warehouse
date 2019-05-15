@@ -33,6 +33,18 @@
                 <a href="/logout" th:text="${'logout'}"></a>
             </div>
         </div>
+        <div class="row align-items-center">
+            <div class="col-sm text-center ">
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    <form th:action="@{/search}" method="get">
+                        <div class="input-group-append">
+                            <input name="query" class="form-control my-0 py-1 amber-border" type="text" placeholder="Search" aria-label="Search">
+                            <button type="submit" class="btn btn-secondary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div th:if="${success != null}" class="col-sm">
                 <div class="alert alert-success">
@@ -90,11 +102,11 @@
                         </li>
                         <li class="page-item active"><a th:text="${products.getPageable().getPageNumber()}" class="page-link" href="#"></a></li>
 
-                        <li th:each="pageNumber : ${#numbers.sequence((products.getPageable().getPageNumber()+1),(products.getPageable().getPageNumber()+3))}" th:if="${pageNumber <= products.getTotalPages()}" class="page-item">
+                        <li th:each="pageNumber : ${#numbers.sequence((products.getPageable().getPageNumber()+1),(products.getPageable().getPageNumber()+3))}" th:if="${pageNumber < products.getTotalPages()}" class="page-item">
                             <a th:text="${pageNumber}" class="page-link" th:href="@{/product/list(page=${pageNumber})}"></a>
                         </li>
 
-                        <li th:if="${products.getPageable().getPageNumber() < products.getTotalPages()}" class="page-item">
+                        <li th:if="${products.getPageable().getPageNumber()+1 < products.getTotalPages()}" class="page-item">
                             <a class="page-link" th:href="@{/product/list(page=${products.getPageable().getPageNumber()+1})}">Next</a>
                         </li>
                     </ul>

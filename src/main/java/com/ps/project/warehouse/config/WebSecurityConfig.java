@@ -46,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/product/delete**",
                         "/productType/edit**", "/productType/create",
                         "/product/getProduct*",
-                        "/productType/delete**", "/user/**", "/role/**").hasRole("ADMIN")
+                        "/productType/delete**", "/user/**", "/role/**",
+                        "/search**").hasRole("ADMIN")
         .anyRequest().anonymous()
             .and()
                 .formLogin().successHandler(loginRedirectHandler).permitAll()
